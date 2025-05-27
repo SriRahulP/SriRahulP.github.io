@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Rahul P - Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23007AFF'/%3E%3Ctext x='50' y='65' font-family='Arial, sans-serif' font-size='35' font-weight='bold' fill='white' text-anchor='middle'%3ESR%3C/text%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #000;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: #007AFF;
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #007AFF;
+            border-radius: 1px;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: none;
+            padding: 100px 2rem 50px;
+        }
+        
+        section.active {
+            display: block;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Home Section */
+        .home {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .hero-content h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #007AFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #007AFF, #0051D5);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
+        }
+        
+        /* About Section */
+        .about {
+            background: #fff;
+            color: #333;
+            padding: 100px 2rem;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-text h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: #000;
+        }
+        
+        .about-text p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .skill-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .skill-card h3 {
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        
+        .about-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #007AFF, #0051D5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 4rem;
+            font-weight: 300;
+        }
+        
+        /* Works Section */
+        .works {
+            background: #f8f9fa;
+            color: #333;
+        }
+        
+        .works h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #000;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, #007AFF, #0051D5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 2rem;
+        }
+        
+        .project-content {
+            padding: 2rem;
+        }
+        
+        .project-content h3 {
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .tag {
+            background: #e9ecef;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background: #000;
+            color: #fff;
+        }
+        
+        .contact h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .contact-form {
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: #333;
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #007AFF, #0051D5);
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            color: #007AFF;
+        }
+        
+        .contact-item {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .contact-item span {
+            font-size: 1.5rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: flex;
+            }
+            
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .about-text h2,
+            .works h2,
+            .contact h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Sri Rahul P</a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showSection('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="showSection('about')">About</a></li>
+                <li><a href="#" onclick="showSection('works')">Works</a></li>
+                <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="home active">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Sri Rahul P</h1>
+                <p>AI Engineer & Embedded Systems Developer</p>
+                <a href="#" onclick="showSection('about')" class="cta-button">Discover My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Me</h2>
+                    <p>I am an enthusiastic and driven undergraduate student pursuing Computer and Communication Engineering at Amrita Vishwa Vidyapeetham. With a strong foundation in Python and ongoing learning in MicroPython and Rust, I possess a deep interest in embedded systems, firmware development, and system optimization.</p>
+                    <p>My technical strengths lie in understanding and implementing machine learning and deep learning algorithms, backed by a commitment to staying ahead in the rapidly evolving tech landscape. Passionate about building intelligent systems that merge software and hardware, I turn complex challenges into scalable solutions and actively seek opportunities to innovate at the intersection of AI, embedded systems, and emerging technologies.</p>
+                </div>
+                <div class="about-image">
+                    <div class="profile-image">SR</div>
+                </div>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Programming Languages</h3>
+                    <p>Python, MicroPython, Rust, JavaScript</p>
+                </div>
+                <div class="skill-card">
+                    <h3>AI/ML Technologies</h3>
+                    <p>TensorFlow, Machine Learning, Deep Learning, NLP</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Data Science & Analytics</h3>
+                    <p>Pandas, NumPy, spaCy, Word2Vec, Trading Analysis</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Web Development</h3>
+                    <p>Flask, RESTful APIs, Frontend Development</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Embedded Systems</h3>
+                    <p>Firmware Development, System Optimization, Hardware Integration</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Advanced ML Techniques</h3>
+                    <p>Neural Networks, NER, Clustering, SVM, Naive Bayes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Works Section -->
+    <section id="works" class="works">
+        <div class="container">
+            <h2>My Works</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">🔐</div>
+                    <div class="project-content">
+                        <h3>AI-Powered Password Strength Checker</h3>
+                        <p>Currently developing an advanced password strength assessment system using neural networks to improve accuracy and help users create the strongest possible passwords with intelligent recommendations.</p>
+                        <div class="project-tags">
+                            <span class="tag">Neural Networks</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Deep Learning</span>
+                            <span class="tag">Security</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">📄</div>
+                    <div class="project-content">
+                        <h3>Intelligent Resume Analysis System</h3>
+                        <p>Building a comprehensive resume screening and ranking system using neural networks, NLP, and advanced ML algorithms. Features include automated parsing, skill extraction, and candidate ranking with web API integration.</p>
+                        <div class="project-tags">
+                            <span class="tag">NLP</span>
+                            <span class="tag">spaCy</span>
+                            <span class="tag">Word2Vec</span>
+                            <span class="tag">Flask API</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">🤖</div>
+                    <div class="project-content">
+                        <h3>Embedded AI Systems</h3>
+                        <p>Exploring the intersection of artificial intelligence and embedded systems, focusing on firmware development and system optimization for intelligent IoT devices.</p>
+                        <div class="project-tags">
+                            <span class="tag">MicroPython</span>
+                            <span class="tag">Rust</span>
+                            <span class="tag">Firmware</span>
+                            <span class="tag">IoT</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">📈</div>
+                    <div class="project-content">
+                        <h3>Trading Analytics Platform</h3>
+                        <p>Developing intelligent trading analysis tools using machine learning algorithms to identify market patterns and optimize trading strategies with real-time data processing.</p>
+                        <div class="project-tags">
+                            <span class="tag">Trading</span>
+                            <span class="tag">ML Algorithms</span>
+                            <span class="tag">Data Analysis</span>
+                            <span class="tag">Python</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <div>
+                            <strong>Email</strong><br>
+                            rahulnjr1112@gmail.com
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span>📱</span>
+                        <div>
+                            <strong>Phone</strong><br>
+                            +91 9942494499
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span>🎓</span>
+                        <div>
+                            <strong>University</strong><br>
+                            Amrita Vishwa Vidyapeetham
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span>💼</span>
+                        <div>
+                            <strong>LinkedIn</strong><br>
+                            linkedin.com/in/SriRahulP2005
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span>📄</span>
+                        <div>
+                            <strong>Resume</strong><br>
+                            <a href="#" onclick="generateResume()" style="color: #007AFF; text-decoration: none;">Download PDF</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navigation functionality
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Update navigation active state
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to clicked nav item
+            event.target.classList.add('active');
+        }
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I\'ll get back to you soon.');
+            this.reset();
+        });
+        
+        // Resume generator function
+        function generateResume() {
+            // Create a new window for the resume
+            const resumeWindow = window.open('about:blank', '_blank');
+            resumeWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Sri Rahul P - Resume</title>
+                    <style>
+                        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 40px; line-height: 1.6; color: #333; }
+                        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #007AFF; padding-bottom: 20px; }
+                        .header h1 { color: #000; margin: 0; font-size: 2.5rem; }
+                        .header p { color: #666; font-size: 1.2rem; margin: 5px 0; }
+                        .section { margin: 25px 0; }
+                        .section h2 { color: #007AFF; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+                        .contact-info { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 15px 0; }
+                        .skills-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+                        .skill-item { background: #f8f9fa; padding: 10px; border-radius: 5px; border-left: 3px solid #007AFF; }
+                        .project { margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; }
+                        .project h3 { color: #000; margin: 0 0 10px 0; }
+                        .tags { margin-top: 10px; }
+                        .tag { background: #007AFF; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8rem; margin-right: 5px; }
+                        @media print { body { margin: 20px; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Sri Rahul P</h1>
+                        <p>AI Engineer & Embedded Systems Developer</p>
+                        <div class="contact-info">
+                            <span>📧 rahulnjr1112@gmail.com</span>
+                            <span>📱 +91 9942494499</span>
+                            <span>💼 linkedin.com/in/SriRahulP2005</span>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>About</h2>
+                        <p>Enthusiastic and driven undergraduate student pursuing Computer and Communication Engineering at Amrita Vishwa Vidyapeetham. Strong foundation in Python and ongoing learning in MicroPython and Rust, with deep interest in embedded systems, firmware development, and system optimization. Passionate about building intelligent systems that merge software and hardware, turning complex challenges into scalable solutions.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>Education</h2>
+                        <div class="project">
+                            <h3>Computer and Communication Engineering</h3>
+                            <p><strong>Amrita Vishwa Vidyapeetham</strong> - Undergraduate Student</p>
+                            <p>Focus: Embedded Systems, AI/ML, System Optimization</p>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>Technical Skills</h2>
+                        <div class="skills-list">
+                            <div class="skill-item"><strong>Programming:</strong> Python, MicroPython, Rust, JavaScript</div>
+                            <div class="skill-item"><strong>AI/ML:</strong> TensorFlow, Neural Networks, Deep Learning</div>
+                            <div class="skill-item"><strong>Data Science:</strong> Pandas, NumPy, spaCy, Word2Vec</div>
+                            <div class="skill-item"><strong>NLP:</strong> NER, Clustering, Naive Bayes, SVM</div>
+                            <div class="skill-item"><strong>Web Development:</strong> Flask, REST APIs</div>
+                            <div class="skill-item"><strong>Embedded Systems:</strong> Firmware, System Optimization</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>Current Projects</h2>
+                        
+                        <div class="project">
+                            <h3>AI-Powered Password Strength Checker</h3>
+                            <p>Developing an advanced password strength assessment system using neural networks to improve accuracy and help users create stronger passwords with intelligent recommendations.</p>
+                            <div class="tags">
+                                <span class="tag">Neural Networks</span>
+                                <span class="tag">Python</span>
+                                <span class="tag">Deep Learning</span>
+                                <span class="tag">Security</span>
+                            </div>
+                        </div>
+                        
+                        <div class="project">
+                            <h3>Intelligent Resume Analysis System</h3>
+                            <p>Building comprehensive resume screening and ranking system using neural networks, NLP, and advanced ML algorithms. Features automated parsing, skill extraction, and candidate ranking with web API integration.</p>
+                            <div class="tags">
+                                <span class="tag">NLP</span>
+                                <span class="tag">spaCy</span>
+                                <span class="tag">Word2Vec</span>
+                                <span class="tag">PyPDF2</span>
+                                <span class="tag">Flask</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>Interests & Specializations</h2>
+                        <ul>
+                            <li>Embedded Systems & Firmware Development</li>
+                            <li>Machine Learning & Deep Learning</li>
+                            <li>Natural Language Processing</li>
+                            <li>Trading Analytics & Financial Technology</li>
+                            <li>IoT & Hardware-Software Integration</li>
+                            <li>System Optimization & Performance</li>
+                        </ul>
+                    </div>
+                </body>
+                </html>
+            `);
+            resumeWindow.document.close();
+        }
+        
+        // Smooth scrolling for internal navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+            });
+        });
+        
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate skill cards on scroll
+            const skillCards = document.querySelectorAll('.skill-card');
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            function animateOnScroll() {
+                const triggerBottom = window.innerHeight / 5 * 4;
+                
+                skillCards.forEach(card => {
+                    const cardTop = card.getBoundingClientRect().top;
+                    if(cardTop < triggerBottom) {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }
+                });
+                
+                projectCards.forEach(card => {
+                    const cardTop = card.getBoundingClientRect().top;
+                    if(cardTop < triggerBottom) {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }
+                });
+            }
+            
+            // Initial setup for animation
+            skillCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = 'all 0.6s ease';
+            });
+            
+            projectCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = 'all 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+        });
+    </script>
+</body>
+</html>
